@@ -1,0 +1,4 @@
+1.cd C:\Users\Prathamesh\Desktop\AWS-Capstone-Projects\Project-2-AWS-Automation
+2.venv\Scripts\activate
+3.aws sts get-caller-identity --profile aws-capstone
+4.python aws_automation.py
