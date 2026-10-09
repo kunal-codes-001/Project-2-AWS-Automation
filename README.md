@@ -1,976 +1,563 @@
-﻿# Project 2 — AWS Resource Automation Using Python and Boto3
+﻿# AWS Resource Automation Using Python and Boto3
 
+A Python-based command-line application for automating common AWS resource management tasks across Amazon S3 and Amazon EC2 using Boto3.
 
-
-## 1. Project Overview
-
-
-
-This project demonstrates AWS resource automation using **Python and Boto3**.
-
-
-
-Instead of manually performing AWS operations through the AWS Management Console, this project provides a **Python command-line interface (CLI)** to automate common operations on Amazon S3 and Amazon EC2.
-
-
-
-The project demonstrates how Python can communicate with AWS services through the Boto3 SDK.
-
-
+**Project Type:** AWS Cloud Automation
+**Language:** Python
+**AWS Region:** Asia Pacific (Mumbai) — `ap-south-1`
+**Repository:** [Project-2-AWS-Automation](https://github.com/kunal-codes-001/Project-2-AWS-Automation)
 
 ---
 
+## Table of Contents
 
-
-## 2. Objective
-
-
-
-The main objectives of this project are:
-
-
-
-* Automate AWS resource operations using Python.
-
-* Use Boto3 to communicate with AWS services.
-
-* Automate Amazon S3 bucket and file operations.
-
-* Automate Amazon EC2 instance management.
-
-* Use IAM to control permissions.
-
-* Demonstrate secure AWS credential handling.
-
-* Provide a simple menu-driven CLI for AWS automation.
-
-
+* [Project Overview](#project-overview)
+* [Objectives](#objectives)
+* [Technologies and AWS Services](#technologies-and-aws-services)
+* [Architecture](#architecture)
+* [Features](#features)
+* [Project Structure](#project-structure)
+* [AWS Configuration](#aws-configuration)
+* [S3 Automation](#s3-automation)
+* [EC2 Automation](#ec2-automation)
+* [Screenshots](#screenshots)
+* [Installation and Setup](#installation-and-setup)
+* [Running the Application](#running-the-application)
+* [Security Practices](#security-practices)
+* [Testing Results](#testing-results)
+* [Key Learnings](#key-learnings)
+* [Future Improvements](#future-improvements)
+* [Conclusion](#conclusion)
 
 ---
 
+## Project Overview
 
+Managing AWS resources manually through the AWS Management Console can involve repetitive tasks. This project demonstrates how Python and Boto3 can be used to automate common AWS operations through a menu-driven command-line interface (CLI).
 
-## 3. AWS Services Used
+The application provides functionality for Amazon S3 bucket and file operations, as well as Amazon EC2 instance management. It uses an AWS CLI profile to establish a Boto3 session and communicate with AWS services.
 
+This project provides hands-on experience with Python scripting, AWS SDK integration, cloud resource management, IAM permissions, and AWS CLI configuration.
 
+## Objectives
 
-| AWS Service | Purpose                                       |
+* Automate common AWS resource operations using Python.
+* Use Boto3 to interact with AWS services programmatically.
+* Create and list Amazon S3 buckets.
+* Upload files to Amazon S3 and list stored objects.
+* List and manage Amazon EC2 instances.
+* Use AWS IAM to manage access permissions.
+* Configure AWS CLI profiles for authentication.
+* Build a simple, menu-driven automation tool.
+* Practice basic cloud security and credential management.
 
-| ----------- | --------------------------------------------- |
+## Technologies and AWS Services
 
-| Amazon S3   | Bucket creation, file upload and file listing |
+| Technology or Service               | Purpose                                  |
+| ----------------------------------- | ---------------------------------------- |
+| Python 3                            | Application logic and automation         |
+| Boto3                               | Python SDK for AWS service interactions  |
+| AWS CLI                             | AWS profile and credential configuration |
+| Amazon S3                           | Bucket and object management             |
+| Amazon EC2                          | Virtual machine lifecycle management     |
+| AWS IAM                             | Identity and access management           |
+| Windows PowerShell / Command Prompt | Development and execution environment    |
+| Git and GitHub                      | Version control and source code hosting  |
 
-| Amazon EC2  | Instance listing, start, stop and termination |
+## Architecture
 
-| AWS IAM     | User, group and permission management         |
-
-
-
----
-
-
-
-## 4. Technologies Used
-
-
-
-* Python 3
-
-* Boto3
-
-* AWS CLI
-
-* Amazon S3
-
-* Amazon EC2
-
-* AWS IAM
-
-* Windows Command Prompt
-
-
-
----
-
-
-
-## 5. Architecture
-
-
+The application follows a simple architecture in which a user selects an operation from the CLI. Python processes the selection, and Boto3 sends API requests to AWS.
 
 ```text
-
-&#x20;                 USER
-
-&#x20;                   |
-
-&#x20;                   v
-
-&#x20;            Python CLI Tool
-
-&#x20;                   |
-
-&#x20;                   v
-
-&#x20;                Boto3
-
-&#x20;                   |
-
-&#x20;            AWS API Requests
-
-&#x20;                   |
-
-&#x20;         +---------+---------+
-
-&#x20;         |                   |
-
-&#x20;         v                   v
-
-&#x20;    Amazon S3            Amazon EC2
-
-&#x20;         |                   |
-
-&#x20;     Buckets \& Files     EC2 Instances
-
+                  USER
+                    |
+                    v
+             Python CLI Tool
+                    |
+                    v
+                 Boto3 SDK
+                    |
+                    v
+              AWS API Requests
+                    |
+             +------+------+
+             |             |
+             v             v
+         Amazon S3      Amazon EC2
+             |             |
+       Buckets/Files   EC2 Instances
 ```
 
-
-
----
-
-
-
-## 6. How the Project Works
-
-
-
-The user interacts with a menu-driven Python application.
-
-
-
-The Python application uses **Boto3**, the AWS SDK for Python, to send API requests to AWS.
-
-
-
-The application can perform operations such as:
-
-
-
-### S3 Operations
-
-
-
-1\. Create/check an S3 bucket
-
-2\. List S3 buckets
-
-3\. Upload a file
-
-4\. List files stored in the bucket
-
-
-
-### EC2 Operations
-
-
-
-1\. List EC2 instances
-
-2\. Launch an EC2 instance
-
-3\. Start an EC2 instance
-
-4\. Stop an EC2 instance
-
-5\. Terminate an EC2 instance
-
-
-
----
-
-
-
-## 7. Project Structure
-
-
-
-```text
-
-Project-2-AWS-Automation/
-
-â”‚
-
-â”œâ”€â”€ aws_automation.py
-
-â”œâ”€â”€ README.md
-
-â”œâ”€â”€ requirements.txt
-
-â”œâ”€â”€ .gitignore
-
-â”‚
-
-â”œâ”€â”€ sample/
-
-â”‚   â””â”€â”€ test.txt
-
-â”‚
-
-â””â”€â”€ screenshots/
-
-```
-
-
-
----
-
-## 7.1 Screenshots
-
-### CLI Menu
-![CLI Menu](screenshots/01-cli-menu.png)
-
-### S3 Bucket
-![S3 Bucket](screenshots/02-s3-bucket.png)
-
-### S3 Upload
-![S3 Upload](screenshots/03-s3-upload.png)
-
-### S3 Files
-![S3 Files](screenshots/04-s3-files.png)
-
-### EC2 Launch
-![EC2 Launch](screenshots/05-ec2-launch.png)
-
-### EC2 Stop
-![EC2 Stop](screenshots/06-ec2-stop.png)
-
-### EC2 Start
-![EC2 Start](screenshots/07-ec2-start.png)
-
-### EC2 Terminate
-![EC2 Terminate](screenshots/08-ec2-terminate.png)
+**Architecture flow:**
+
+1. The user selects an operation from the CLI menu.
+2. Python executes the corresponding function.
+3. Boto3 uses the configured AWS profile and region.
+4. AWS receives the request and checks the relevant IAM permissions.
+5. The application displays the operation result.
+
+## Features
+
+### Amazon S3 Automation
+
+* Create an S3 bucket.
+* List available S3 buckets.
+* Upload a local file to an S3 bucket.
+* List objects stored in an S3 bucket.
+* Check whether the required project bucket exists.
+
+### Amazon EC2 Automation
+
+* List EC2 instances.
+* Launch an EC2 instance.
+* Start a stopped EC2 instance.
+* Stop a running EC2 instance.
+* Terminate an EC2 instance.
+* Find the project instance using its Name tag.
 
 ### Project Information
-![Project Information](screenshots/09-project-info.png)
 
----
+The application can display configuration information such as:
 
-## 8. AWS Configuration
+* Project name
+* Python and SDK information
+* AWS region
+* S3 bucket name
+* EC2 AMI and instance type
+* VPC, subnet, and security group information
 
+The availability of individual configuration details depends on the application implementation and AWS resources.
 
+## Project Structure
+
+```text
+Project-2-AWS-Automation/
+│
+├── aws_automation.py
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── commands_forun_project.txt
+├── test_aws.py
+│
+├── sample/
+│   └── test.txt
+│
+└── screenshots/
+    ├── 01-cli-menu.png
+    ├── 02-s3-bucket.png
+    ├── 03-s3-upload.png
+    ├── 04-s3-files.png
+    ├── 05-ec2-launch.png
+    ├── 06-ec2-stop.png
+    ├── 07-ec2-start.png
+    ├── 08-ec2-terminate.png
+    └── 09-project-info.png
+```
+
+The `venv/` directory is excluded from version control because each developer can create their own local Python environment.
+
+## AWS Configuration
 
 The project uses a dedicated AWS CLI profile:
 
-
-
 ```text
-
 aws-capstone
-
 ```
 
+The configured AWS region is:
 
+```text
+ap-south-1
+```
 
-The Python application creates a Boto3 session using this profile.
+This is the Asia Pacific (Mumbai) AWS Region.
 
-
+The application creates a Boto3 session using the configured profile and region:
 
 ```python
-
 session = boto3.Session(
-
-&#x20;   profile_name="aws-capstone",
-
-&#x20;   region_name="ap-south-1"
-
+    profile_name="aws-capstone",
+    region_name="ap-south-1"
 )
-
 ```
 
+This allows the application to use the selected AWS profile instead of embedding AWS credentials directly in the Python source code.
 
+## IAM Configuration
 
-The AWS region used for this project is:
+The project configuration uses the following IAM resources:
 
+| Resource   | Name                             |
+| ---------- | -------------------------------- |
+| IAM User   | `aws-capstone-automation`        |
+| IAM Group  | `aws-capstone-automation-group`  |
+| IAM Policy | `AWS-Capstone-Automation-Policy` |
 
+The IAM policy is intended to provide permissions for the S3 and EC2 operations performed by the application.
 
-```text
+For production use, review the policy to ensure it grants only the permissions and resource access required by the application. Avoid broad permissions where narrower permissions are possible.
 
-ap-south-1
+## S3 Automation
 
-```
+The application demonstrates common S3 operations using Boto3.
 
-
-
-Mumbai Region.
-
-
-
----
-
-
-
-## 9. IAM Configuration
-
-
-
-A dedicated IAM user was created for this automation project.
-
-
-
-### IAM User
-
-
+**Configured project bucket:**
 
 ```text
-
-aws-capstone-automation
-
-```
-
-
-
-### IAM Group
-
-
-
-```text
-
-aws-capstone-automation-group
-
-```
-
-
-
-### IAM Policy
-
-
-
-```text
-
-AWS-Capstone-Automation-Policy
-
-```
-
-
-
-The policy provides the permissions required by the Python automation program for S3 and EC2 operations.
-
-
-
-The project follows the principle of granting only the permissions required for the automation tasks.
-
-
-
----
-
-
-
-## 10. S3 Automation
-
-
-
-The application can check whether the required S3 bucket exists.
-
-
-
-Bucket used for the project:
-
-
-
-```text
-
 aws-capstone-automation-2026-001
-
 ```
-
-
 
 ### File Upload
 
-
-
-The application uploads:
-
-
+The application uploads a sample file from the local project directory:
 
 ```text
-
 sample/test.txt
-
 ```
 
+The file is uploaded to S3 with the object key `test.txt`.
 
-
-to the S3 bucket using Boto3.
-
-
-
-Example:
-
-
+Example Boto3 operation:
 
 ```python
-
 s3.upload_file(
-
-&#x20;   file_path,
-
-&#x20;   bucket_name,
-
-&#x20;   "test.txt"
-
+    file_path,
+    bucket_name,
+    "test.txt"
 )
-
 ```
 
-
-
-### Result
-
-
-
-```text
-
-File uploaded successfully!
-
-File: sample/test.txt
-
-S3 Bucket: aws-capstone-automation-2026-001
-
-```
-
-
-
-The application can also list objects stored in the bucket.
-
-
-
-Example result:
-
-
-
-```text
-
-Files in S3 bucket:
-
---------------------
-
-test.txt
-
-```
-
-
-
----
-
-
-
-## 11. EC2 Automation
-
-
-
-The application can manage EC2 instances using Boto3.
-
-
-
-### EC2 Configuration
-
-
-
-```text
-
-Instance Type: t3.micro
-
-AMI: Amazon Linux 2023
-
-Region: ap-south-1
-
-```
-
-
-
-The application supports:
-
-
-
-```text
-
-List EC2 Instances
-
-Launch EC2 Instance
-
-Start EC2 Instance
-
-Stop EC2 Instance
-
-Terminate EC2 Instance
-
-```
-
-
-
----
-
-
-
-## 12. Dynamic EC2 Instance Selection
-
-
-
-The application can automatically find the project EC2 instance using its Name tag.
-
-
-
-```text
-
-aws-capstone-automation-ec2
-
-```
-
-
-
-This allows the application to select an existing project instance instead of requiring the user to manually enter an instance ID.
-
-
+### S3 Operations Demonstrated
+
+* Checking for the required bucket.
+* Creating a bucket when requested.
+* Listing S3 buckets.
+* Uploading a local file.
+* Listing objects stored in the bucket.
 
 Example output:
 
+```text
+File uploaded successfully!
 
+File: sample/test.txt
+S3 Bucket: aws-capstone-automation-2026-001
+```
+
+Example object listing:
 
 ```text
+Files in S3 bucket:
+--------------------
+test.txt
+```
 
+The bucket must exist in the appropriate region, and the configured AWS identity must have the necessary permissions.
+
+## EC2 Automation
+
+The application uses Boto3 to manage EC2 instances programmatically.
+
+### EC2 Configuration
+
+| Setting            | Value             |
+| ------------------ | ----------------- |
+| Instance Type      | `t3.micro`        |
+| Operating System   | Amazon Linux 2023 |
+| AWS Region         | `ap-south-1`      |
+| Instance Selection | Name tag          |
+
+### Supported Operations
+
+| Operation          | Description                            |
+| ------------------ | -------------------------------------- |
+| List Instances     | Retrieve EC2 instance information      |
+| Launch Instance    | Request a new EC2 instance             |
+| Start Instance     | Start a stopped instance               |
+| Stop Instance      | Stop a running instance                |
+| Terminate Instance | Request permanent instance termination |
+
+### Dynamic EC2 Instance Selection
+
+The application can identify the project instance using its Name tag:
+
+```text
+aws-capstone-automation-ec2
+```
+
+This reduces the need to enter an instance ID manually when selecting the configured project instance.
+
+Example output:
+
+```text
 Selected EC2 instance: i-0019a1c9bff31e04f
-
 ```
 
+The instance must exist and be discoverable using the application's configured selection logic.
 
+### EC2 Lifecycle
 
----
-
-
-
-## 13. EC2 Lifecycle Testing
-
-
-
-The EC2 automation was tested through the following lifecycle:
-
-
+The demonstrated lifecycle operations include:
 
 ```text
-
 Running
-
-&#x20;  |
-
-&#x20;  v
-
-Stop
-
-&#x20;  |
-
-&#x20;  v
-
+   |
+   v
+ Stop Instance
+   |
+   v
 Stopped
-
-&#x20;  |
-
-&#x20;  v
-
-Start
-
-&#x20;  |
-
-&#x20;  v
-
+   |
+   v
+ Start Instance
+   |
+   v
 Running
-
-&#x20;  |
-
-&#x20;  v
-
-Terminate
-
-&#x20;  |
-
-&#x20;  v
-
+   |
+   v
+Terminate Instance
+   |
+   v
 Terminated
-
 ```
 
+**Cost and safety note:** EC2 termination is a destructive action. Verify the selected instance ID before confirming termination. Stopping an instance does not necessarily eliminate all associated costs, such as applicable EBS storage charges.
 
+## Screenshots
 
-The project successfully demonstrated:
+The following screenshots document the application's CLI and AWS operations.
 
+### 1. CLI Menu
 
+![AWS Automation CLI Menu](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/01-cli-menu.png)
 
-* EC2 listing
+[View CLI Menu](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/01-cli-menu.png)
 
-* EC2 stop
+### 2. S3 Bucket
 
-* EC2 start
+![S3 Bucket](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/02-s3-bucket.png)
 
-* EC2 termination
+[View S3 Bucket Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/02-s3-bucket.png)
 
+### 3. S3 File Upload
 
+![S3 File Upload](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/03-s3-upload.png)
 
----
+[View S3 Upload Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/03-s3-upload.png)
 
+### 4. S3 Files
 
+![S3 Files](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/04-s3-files.png)
 
-## 14. CLI Menu
+[View S3 Files Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/04-s3-files.png)
 
+### 5. EC2 Launch
 
+![EC2 Launch](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/05-ec2-launch.png)
 
-The application provides the following menu:
+[View EC2 Launch Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/05-ec2-launch.png)
 
+### 6. EC2 Stop
 
+![EC2 Stop](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/06-ec2-stop.png)
+
+[View EC2 Stop Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/06-ec2-stop.png)
+
+### 7. EC2 Start
+
+![EC2 Start](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/07-ec2-start.png)
+
+[View EC2 Start Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/07-ec2-start.png)
+
+### 8. EC2 Termination
+
+![EC2 Termination](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/08-ec2-terminate.png)
+
+[View EC2 Termination Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/08-ec2-terminate.png)
+
+### 9. Project Information
+
+![Project Information](https://github.com/kunal-codes-001/Project-2-AWS-Automation/raw/main/screenshots/09-project-info.png)
+
+[View Project Information Screenshot](https://github.com/kunal-codes-001/Project-2-AWS-Automation/blob/main/screenshots/09-project-info.png)
+
+## Installation and Setup
+
+### Prerequisites
+
+Before running the application, make sure you have:
+
+* Python 3 installed.
+* Git installed.
+* AWS CLI installed.
+* An AWS account with the required permissions.
+* An AWS CLI profile configured for this project.
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/kunal-codes-001/Project-2-AWS-Automation.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd Project-2-AWS-Automation
+```
+
+### Step 2: Create a Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### Step 3: Activate the Virtual Environment
+
+On Windows PowerShell:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+On Windows Command Prompt:
+
+```cmd
+venv\Scripts\activate.bat
+```
+
+### Step 4: Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## AWS CLI Configuration
+
+Configure the dedicated AWS CLI profile:
+
+```bash
+aws configure --profile aws-capstone
+```
+
+Enter the appropriate AWS access key ID, secret access key, default region (`ap-south-1`), and output format when prompted.
+
+Verify the AWS identity:
+
+```bash
+aws sts get-caller-identity --profile aws-capstone
+```
+
+The command should return the AWS account and identity information associated with the configured credentials.
+
+Use credentials only for the intended AWS account and follow your organization's credential management practices. Never paste credentials into source code, README files, screenshots, or public repositories.
+
+## Running the Application
+
+After installing the dependencies and configuring the AWS profile, run:
+
+```bash
+python aws_automation.py
+```
+
+The application displays a menu similar to the following:
 
 ```text
-
+========================================
+         AWS AUTOMATION TOOL
 ========================================
 
-&#x20;       AWS AUTOMATION TOOL
+1. Create S3 Bucket
+2. List S3 Buckets
+3. Upload File to S3
+4. List S3 Files
+5. List EC2 Instances
+6. Launch EC2 Instance
+7. Start EC2 Instance
+8. Stop EC2 Instance
+9. Terminate EC2 Instance
+10. Show Project Information
+11. Exit
 
 ========================================
-
-
-
-1\. Create S3 Bucket
-
-2\. List S3 Buckets
-
-3\. Upload File to S3
-
-4\. List S3 Files
-
-5\. List EC2 Instances
-
-6\. Launch EC2 Instance
-
-7\. Start EC2 Instance
-
-8\. Stop EC2 Instance
-
-9\. Terminate EC2 Instance
-
-10\. Show Project Information
-
-11\. Exit
-
-
-
-========================================
-
 ```
 
+Enter the menu number corresponding to the operation you want to perform.
 
+Available operations depend on the AWS profile, IAM permissions, resource configuration, and implementation of the application.
+
+## Security Practices
+
+The project incorporates the following security considerations:
+
+* Uses an AWS CLI profile instead of hardcoding credentials in the Python source.
+* Excludes `.env` files from version control.
+* Excludes `.pem` files from version control.
+* Excludes local AWS configuration directories.
+* Excludes the local Python virtual environment.
+* Uses IAM identities and policies for access control.
+* Uses a configurable AWS region.
+* Keeps local credentials separate from application code.
+
+These exclusions help reduce the risk of accidentally committing sensitive files, but they do not guarantee that all secrets are absent. Review files, screenshots, commit history, and IAM permissions before making a repository public.
+
+For production deployments, consider IAM roles and temporary credentials instead of long-lived IAM user access keys.
+
+## Testing Results
+
+The project documentation records the following operations as successfully tested:
+
+| Operation                   | Documented Result |
+| --------------------------- | ----------------- |
+| S3 bucket check             | Successful        |
+| S3 bucket listing           | Successful        |
+| S3 file upload              | Successful        |
+| S3 object listing           | Successful        |
+| EC2 instance listing        | Successful        |
+| EC2 instance selection      | Successful        |
+| EC2 stop                    | Successful        |
+| EC2 start                   | Successful        |
+| EC2 termination             | Successful        |
+| Project information display | Successful        |
+
+These results reflect the documented project tests. Results may vary depending on the current AWS account configuration, permissions, resource availability, and region.
+
+## Key Learnings
+
+Through this project, I gained practical experience with:
+
+* Python-based AWS automation.
+* Using Boto3 to interact with AWS services.
+* Automating Amazon S3 bucket and object operations.
+* Managing the EC2 instance lifecycle programmatically.
+* Configuring AWS CLI profiles and Boto3 sessions.
+* Understanding IAM identities, policies, and permissions.
+* Building a menu-driven command-line application.
+* Organizing code and project documentation with Git and GitHub.
+* Applying basic security practices to cloud automation projects.
+
+## Future Improvements
+
+Potential enhancements include:
+
+* Add structured logging for AWS operations.
+* Improve error handling for AWS API failures.
+* Add confirmation prompts for destructive operations.
+* Add EC2 status monitoring.
+* Support multiple S3 buckets and configurable resources.
+* Add command-line arguments for non-interactive execution.
+* Add automated tests using mocked AWS responses.
+* Extend automation to services such as AWS Lambda and Amazon DynamoDB.
+* Integrate automated checks into a CI/CD workflow.
+
+## Conclusion
+
+This project demonstrates how Python and Boto3 can simplify common AWS resource management tasks through a command-line application.
+
+By integrating Amazon S3, Amazon EC2, AWS IAM, and AWS CLI configuration, the project provides practical experience in cloud automation and AWS SDK usage.
+
+It serves as a foundation for further learning in AWS, DevOps, infrastructure automation, and cloud engineering.
 
 ---
 
-
-
-## 15. Project Information
-
-
-
-The application can display the project configuration, including:
-
-
-
-* Project name
-
-* Python version/SDK information
-
-* AWS region
-
-* S3 bucket
-
-* EC2 AMI
-
-* Instance type
-
-* VPC
-
-* Subnet
-
-* Security Group
-
-
-
----
-
-
-
-## 16. Testing Results
-
-
-
-The following operations were successfully tested:
-
-
-
-| Operation              | Result     |
-
-| ---------------------- | ---------- |
-
-| S3 bucket check        | Successful |
-
-| S3 bucket listing      | Successful |
-
-| S3 file upload         | Successful |
-
-| S3 file listing        | Successful |
-
-| EC2 instance listing   | Successful |
-
-| EC2 instance selection | Successful |
-
-| EC2 stop               | Successful |
-
-| EC2 start              | Successful |
-
-| EC2 termination        | Successful |
-
-| Project information    | Successful |
-
-
-
----
-
-
-
-## 17. Installation
-
-
-
-Clone the repository:
-
-
-
-```bash
-
-git clone <YOUR-GITHUB-REPOSITORY-URL>
-
-```
-
-
-
-Move into the project directory:
-
-
-
-```bash
-
-cd Project-2-AWS-Automation
-
-```
-
-
-
-Create a virtual environment:
-
-
-
-```bash
-
-python -m venv venv
-
-```
-
-
-
-Activate it on Windows:
-
-
-
-```bash
-
-venv\\Scripts\\activate
-
-```
-
-
-
-Install dependencies:
-
-
-
-```bash
-
-pip install -r requirements.txt
-
-```
-
-
-
----
-
-
-
-## 18. AWS CLI Configuration
-
-
-
-Configure the AWS CLI profile:
-
-
-
-```bash
-
-aws configure --profile aws-capstone
-
-```
-
-
-
-Verify the identity:
-
-
-
-```bash
-
-aws sts get-caller-identity --profile aws-capstone
-
-```
-
-
-
-The AWS credentials should remain stored securely and must never be uploaded to GitHub.
-
-
-
----
-
-
-
-## 19. Run the Application
-
-
-
-Run:
-
-
-
-```bash
-
-python aws_automation.py
-
-```
-
-
-
-The application will display the AWS Automation Tool menu.
-
-
-
-Select the required operation by entering the corresponding menu number.
-
-
-
----
-
-
-
-## 20. Security Practices
-
-
-
-The following security practices were followed:
-
-
-
-* AWS credentials are not stored inside the Python source code.
-
-* AWS credentials are not uploaded to GitHub.
-
-* Private `.pem` files are excluded using `.gitignore`.
-
-* AWS credential directories are excluded using `.gitignore`.
-
-* A dedicated IAM user and group are used for this project.
-
-* Permissions are provided through an IAM policy.
-
-* The project uses an AWS CLI profile for authentication.
-
-
-
----
-
-
-
-## 21. Key Learnings
-
-
-
-Through this project, I learned:
-
-
-
-* How Boto3 communicates with AWS services.
-
-* How to automate S3 operations using Python.
-
-* How to automate EC2 operations using Python.
-
-* How to use AWS IAM for permissions.
-
-* How to configure and use an AWS CLI profile.
-
-* How to create a menu-driven AWS automation tool.
-
-* How to manage EC2 instance lifecycle operations programmatically.
-
-* How to follow basic AWS security practices.
-
-
-
----
-
-
-
-## 22. Future Improvements
-
-
-
-Possible improvements include:
-
-
-
-* Add automated EC2 status monitoring.
-
-* Add support for multiple S3 buckets.
-
-* Add logging for AWS operations.
-
-* Add error-specific exception handling.
-
-* Add command-line arguments.
-
-* Add support for additional AWS services such as Lambda and DynamoDB.
-
-
-
----
-
-
-
-## 23. Conclusion
-
-
-
-This project demonstrates how AWS resource management tasks can be automated using Python and Boto3.
-
-
-
-The application provides a simple CLI through which users can perform common Amazon S3 and Amazon EC2 operations while using AWS IAM for access control.
-
-
-
-The project provides practical experience with AWS automation, Python programming, Boto3, IAM, S3, EC2, and AWS CLI configuration.
-
-
-
-
+**GitHub Repository:** [AWS Resource Automation Using Python and Boto3](https://github.com/kunal-codes-001/Project-2-AWS-Automation)
